@@ -37,12 +37,14 @@ export function nextBoundaryRight(document: TextDocument, position: Position) {
 }
 
 function isBoundary(text: string, position: Position) {
+    if (whitespace.test(text[position.character])) return false;
+
     const prev = char(text[position.character - 1]);
     const cur = char(text[position.character]);
     const next = char(text[position.character + 1]);
 
     if (prev.separator !== cur.separator) return true;
-    if (cur.underscore && !prev.underscore) return true;
+    // if (cur.underscore && !prev.underscore) return true;
     if (prev.underscore && !cur.underscore) return true;
     if (cur.numeric && !prev.numeric) return true;
     if (prev.numeric && !cur.numeric) return true;
